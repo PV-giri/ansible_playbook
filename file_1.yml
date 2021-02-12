@@ -1,0 +1,32 @@
+- hosts: all
+  remote_user: ubuntu
+  become: yes
+  vars:
+    my_content: "this is for my firtst yaml file check"
+  tasks:
+  - copy:
+      dest: /tmp/bjp_txt
+      content: "{{my_content}}" 
+      owner: ubuntu
+      group: ubuntu
+      mode: u=rwx,g=r,o=r  
+  - copy:
+      src: /home/ansible/playbook/file_1.yml
+      dest: /etc/file_1.yml
+      owner: ubuntu
+      group: ubuntu
+      mode: u+rw,g-wx,o-rwx 
+
+
+
+
+
+
+
+
+
+
+
+
+
+

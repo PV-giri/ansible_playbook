@@ -1,0 +1,43 @@
+
+
+- hosts: all
+  remote_user: ec2-user
+  become: yes
+
+  tasks:
+    - name: make sure that nginx is installed
+      yum:
+        name: nginx
+        state: present
+        update_cache: yes
+    - name: make sure that nginx as running
+      service:
+        name: nginx
+        state: started
+    - name: copy the files in servers
+      copy:
+        src: /etc/nginx/11
+        dest: /etc/file1
+        owner: ec2-user
+        group: ec2-user
+        mode: u+rw,g-wx,o-rwx
+    - name: copy the files in servers
+      copy:
+        src: /etc/nginx/22
+        dest: /etc/file2
+        owner: ec2-user
+        group: ec2-user
+        mode: u+rw,g-wx,o-rwx
+
+      notify: restart nginx
+
+  handlers:
+    - name: restart nginx service 
+      service:
+        name: nginx
+        state: restarted
+
+     
+
+
+  
